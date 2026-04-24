@@ -446,7 +446,7 @@ void VL53L1XSensor::set_measurement_timing_budget()
     uint32_t macro_period_us;
 
     // "Update Macro Period for Range A VCSEL Period"
-    macro_period_us = calc_macro_period(reg(0x0060).get());
+    macro_period_us = calc_macro_period(reg16(0x0060).get());
 
     // "Update Phase timeout - uses Timing A"
     // Timeout of 1000 is tuning parm default (TIMED_PHASECAL_CONFIG_TIMEOUT_US_DEFAULT)
