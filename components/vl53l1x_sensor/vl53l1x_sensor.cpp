@@ -409,7 +409,7 @@ uint32_t VL53L1XSensor::calc_macro_period(uint8_t vcsel_period)
 {
   // from VL53L1_calc_pll_period_us()
   // fast osc frequency in 4.12 format; PLL period in 0.24 format
-  uint16_t fast_osc_frequency = reg16(0x0006).get();
+  uint16_t fast_osc_frequency = readWord(0x0006);
   uint32_t pll_period_us = ((uint32_t)0x01 << 30) / fast_osc_frequency;
 
   // from VL53L1_decode_vcsel_period()
@@ -433,7 +433,7 @@ void VL53L1XSensor::set_measurement_timing_budget()
         return;
     }
 
-    uint32_t range_config_timeout_us = timing_budget_us_ -= TimingGuard;
+    uint32_t range_config_timeout_us = timing_budget_us_ - TimingGuard;
     if (range_config_timeout_us > 1100000) {
         ESP_LOGE(TAG, "'%s' - invalid timing budget: %iµs (distance mode: %i)", this->name_.c_str(), timing_budget_us_);
         return; // FDA_MAX_TIMING_BUDGET_US * 2
